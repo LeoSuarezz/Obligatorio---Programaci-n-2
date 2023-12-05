@@ -122,6 +122,14 @@
   margin-top: calc(-1 * var(--bs-gutter-y));
   margin-right: calc(-0.5 * var(--bs-gutter-x));
   margin-left: calc(-0.5 * var(--bs-gutter-x));
+
+}
+.col-lg-12 {
+    flex: 1; /* Usa flex: 1 para que el contenedor se expanda y ocupe todo el espacio disponible */
+}
+#MainContent_lstClientes {
+    width: 100%; /* Establece el ancho al 100% para ocupar todo el espacio del contenedor padre */
+    box-sizing: border-box; /* Asegura que el ancho incluya el padding y el borde */
 }
 .row > * {
   box-sizing: border-box;

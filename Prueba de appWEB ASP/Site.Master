@@ -4,20 +4,20 @@
 
 <html lang="es">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
+    <title><%: Page.Title %> - L.A. Motors: Rent & Buy Your Ride</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
-<body>
+<body style="margin: 0;">
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
@@ -40,26 +40,33 @@
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" runat="server" href="~/">Nombre de la aplicación</a>
+                <a class="navbar-brand" id="nombreapp" runat="server" href="~/">L.A. Motors</a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About">Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Vehiculos">Vehículos</a></li>
+                        <li class="nav-item"><a class="nav-link" id="lnkUsuarios" runat="server" href="~/Usuarios">Usuarios</a></li>
+                        <li class="nav-item"><a class="nav-link" id="lnkClientes" runat="server" href="~/Clientes">Clientes</a></li>
+                        <li class="nav-item"><a class="nav-link" id="lnkVehiculos" runat="server" href="~/Vehiculos">Vehículos</a></li>
+                        <li class="nav-item"><a class="nav-link" id="lnkVentas" runat="server" href="~/Ventas">Ventas</a></li>
+                        <li class="nav-item"><a class="nav-link" id="lnkAlquileres" runat="server" href="~/Alquileres">Alquileres</a></li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item m-auto"><a class="nav-link" id="lnkLogOut" runat="server" href="~/Login">Cerrar sesión</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="container body-content">
+
+        <div class="container body-content center-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>
+            <hr id="hrfooter" />
+            <footer id="ContenedorFooter">
+                <p>&copy; <%: DateTime.Now.Year %> - L.A. Motors: Rent & Buy Your Ride</p>
             </footer>
         </div>
     </form>

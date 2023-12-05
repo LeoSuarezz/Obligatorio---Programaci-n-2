@@ -7,10 +7,10 @@ namespace Prueba_de_appWEB_ASP.Clases
 {
     public class Camion : Vehiculo
     {
-        private int capacidadCarga;
+        public int capacidadCarga { get; set; }
         public Camion() { }
-        public Camion(string matricula, string marca, string modelo, int kilometros, int año, string color, int precioVenta, int precioAlquiler, int capacidadCarga) :
-            base(matricula, marca, modelo, kilometros, año, color, precioVenta,capacidadCarga)
+        public Camion(bool disponible, string matricula, string marca, string modelo, int kilometros, DateTime anio, string color, int precioVenta, int precioAlquiler, string imagen1, string imagen2, string imagen3, int capacidadCarga) :
+            base(disponible, matricula, marca, modelo, kilometros, anio, color, precioVenta, precioAlquiler, imagen1, imagen2, imagen3)
         {
             this.capacidadCarga = capacidadCarga;
         }

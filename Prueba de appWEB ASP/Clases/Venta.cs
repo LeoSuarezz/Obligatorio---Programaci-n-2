@@ -7,29 +7,35 @@ namespace Prueba_de_appWEB_ASP.Clases
 {
     public class Venta
     {
-        private int numVenta;
-        private int totalVenta;
-        private DateTime fechaVenta;
-        private Cliente cliente;
-        private List<Vehiculo> listaVehiculosVendidos;
+        public int numVenta { get; set; }
+        public int totalVenta { get; set; }
+        public DateTime fechaVenta { get; set; }
+        public string documentoCliente { get; set; }    
+        public string matriculaVehiculo { get; set; }
+        public string username { get; set; }
+
         public Venta() { }
-        public Venta(int numVenta, int totalVenta, DateTime fechaVenta, Cliente cliente,List<Vehiculo> listaVehiculos)
+        public Venta(int numVenta, int totalVenta, DateTime fechaVenta, string documento,string matricula,string username)
         {
             this.numVenta = numVenta;
             this.totalVenta = totalVenta;
             this.fechaVenta = fechaVenta;
-            this.cliente = cliente;
-            this.listaVehiculosVendidos = listaVehiculos;
+            this.documentoCliente = documento;
+            this.matriculaVehiculo = matricula;
+            this.username = username;
         }
         public int getNumVenta() {  return numVenta; }
         public int getTotalVenta() { return totalVenta; }
         public DateTime getFechaVenta() { return fechaVenta; }
-        public Cliente getCliente() {  return cliente; }
-        public List<Vehiculo> getListaVehiculos() { return listaVehiculosVendidos; }
+        public string getDocumentoCliente() { return documentoCliente; }
+        public string getMatricula() { return matriculaVehiculo; }
+        public string getUsername() { return username; }
+
         public void setNumVenta (int numVenta) { this.numVenta =numVenta; }
         public void setTotalVenta (int totalVenta) { this.totalVenta=totalVenta; }
         public void setFechaVenta (DateTime fechaVenta) { this.fechaVenta=fechaVenta; }
-        public void setCliente(Cliente cliente) { this.cliente = cliente;}
-        public void setListaVehiculosVendidos(List<Vehiculo> listaVehiculosVendidos) { this.listaVehiculosVendidos = listaVehiculosVendidos; }
+        public void setDocumentoCliente(string documento) { this.documentoCliente = documento; }
+        public void setMatricula(string matricula) { this.matriculaVehiculo = matricula; }
+        public void setUsername(string username) { this.username = username; }
     }
 }

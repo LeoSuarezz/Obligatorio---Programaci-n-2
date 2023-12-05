@@ -7,13 +7,13 @@ namespace Prueba_de_appWEB_ASP.Clases
 {
     public class Sucursal
     {
-        private string nombreSucursal;
-        private string direccionSucursal;
-        private List<Cliente> listaClientes;
-        private List<Vehiculo> listaVehiculos;
-        private List<Alquiler> listaVehiculosAlquilados;
-        private List<Venta> listaVehiculosVendidos;
-        private List<Usuario> listaUsuarios;
+        public string nombreSucursal { get; set; }
+        public string direccionSucursal { get; set; }
+        public List<Cliente> listaClientes { get; set; }
+        public List<Vehiculo> listaVehiculos { get; set; }
+        public List<Alquiler> listaVehiculosAlquilados { get; set; }
+        public List<Venta> listaVehiculosVendidos { get; set; }
+        public List<Usuario> listaUsuarios { get; set; }
         public Sucursal() { }
         public Sucursal(string nombreSucursal, string direccionSucursal, List<Cliente> clientes, List<Vehiculo> vehiculos, List<Alquiler> alquileres, List<Venta> ventas, List<Usuario> usuarios)
         {
