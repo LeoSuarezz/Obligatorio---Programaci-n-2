@@ -7,7 +7,7 @@ namespace Prueba_de_appWEB_ASP.Clases
 {
     public abstract class BaseDeDatos
     {
-        public static List<Vehiculo> listaVehiculos = new List<Vehiculo>(); //se crea STATIC para que se pueda ver de todos lados
+        public static List<Vehiculo> listaVehiculos = new List<Vehiculo>();
         public static List<Usuario> listaUsuarios = new List<Usuario>();
         public static List<Cliente> listaClientes = new List<Cliente>();
         public static List<Venta> listaVentas = new List<Venta>();
@@ -18,7 +18,7 @@ namespace Prueba_de_appWEB_ASP.Clases
         public static void CagarDatosIniciales()
         {
             Usuario usuario = new Usuario();
-            usuario.setIdUsuario(1);//A fuego porque es el primero
+            usuario.setIdUsuario(1);
             usuario.setUsername("Admin");
             usuario.setNombreUsuario("Admin");
             usuario.setApellidoUsuario("Admin");
@@ -28,7 +28,7 @@ namespace Prueba_de_appWEB_ASP.Clases
             usuario.setVerVentas(true);
             usuario.setVerClientes(true);
             usuario.setVerVehiculos(true);
-            usuario.setVerAlquileres(true);//false = no se ve en la nav como ejemplo
+            usuario.setVerAlquileres(true);
 
             listaUsuarios.Add(usuario);
 
@@ -106,9 +106,6 @@ namespace Prueba_de_appWEB_ASP.Clases
             Alquiler alquiler2 = new Alquiler(2, 8500, fechaAlq2, 10, false, "45899989", "GHI789", "Admin");
             listaAlquileres.Add(alquiler1);
             listaAlquileres.Add(alquiler2);
-
-
-
         }
 
         public static void GuardarUsuarioLogeado(Usuario usuario)

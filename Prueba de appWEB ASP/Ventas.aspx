@@ -47,26 +47,28 @@
     </div>
     <hr />
 
-    <!-- PARTE NUEVA PROBANDO MOSTRAR LISTA DE VEHICULOS VENDIDOS-->
+   
 
     <div class="row">
         <div class="col-lg-7">
             <h3>Lista de vehículos vendidos</h3>
             <asp:GridView ID="gvVentas" runat="server" Width="80%" BorderWidth="2px" CellSpacing="15"
                 AutoGenerateColumns="false"
-                DataKeyNames="numVenta">
+                DataKeyNames="numVenta"
+                OnRowDeleting="gvVentas_RowDeleting"
+                OnRowDataBound="gvVentas_RowDataBound">
                 <Columns>
-                    <asp:TemplateField HeaderText="Numero de Venta" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderText="Número de Venta" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lbl10" runat="server" Text='<%# Bind("NumVenta") %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                       
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Matricula" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderText="Matrícula" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lbl11" runat="server" Text='<%# Bind("matriculaVehiculo") %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                      
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                     </asp:TemplateField>
@@ -79,45 +81,52 @@
                     <asp:TemplateField HeaderText="Modelo" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lblModelo" runat="server" Text='<%# ObtenerModeloVehiculo(Eval("matriculaVehiculo")) %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                     
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Color" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lblColor" runat="server" Text='<%# ObtenerColorVehiculo(Eval("matriculaVehiculo")) %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                     
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Año" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lblAño" runat="server" Text='<%# ObtenerAnioVehiculo(Eval("matriculaVehiculo")) %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                     
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Precio Venta" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lblPrecioAlquiler" runat="server" Text='<%# ObtenerPrecioVentaVehiculo(Eval("matriculaVehiculo")) %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                      
                         </ItemTemplate>
                         <ItemStyle Width="200px" />
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Documento Cliente" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lblDocumentoCliente" runat="server" Text='<%# ObtenerDocumentoCliente(Eval("documentoCliente")) %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+               
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Nombre y Apellido Cliente" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lblNombreApellido" runat="server" Text='<%# ObtenerNombreApellidoCliente(Eval("documentoCLiente")) %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                      
                         </ItemTemplate>
                         <ItemStyle Width="500px" />
                     </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Eliminar" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
+                        <ItemTemplate>
+                            <asp:LinkButton CssClass="btn btn-dark" ID="lnkDelete" runat="server" CausesValidation="False" CommandName="Delete" Text="Eliminar"></asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
                 </Columns>
             </asp:GridView>
         </div>

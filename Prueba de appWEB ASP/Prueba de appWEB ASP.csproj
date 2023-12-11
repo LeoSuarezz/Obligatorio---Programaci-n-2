@@ -214,7 +214,6 @@
     <Compile Include="Clases\Camion.cs" />
     <Compile Include="Clases\Cliente.cs" />
     <Compile Include="Clases\Moto.cs" />
-    <Compile Include="Clases\Sucursal.cs" />
     <Compile Include="Clases\Usuario.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
     <Compile Include="Clases\Venta.cs" />

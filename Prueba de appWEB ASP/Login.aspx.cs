@@ -30,7 +30,7 @@ namespace Prueba_de_appWEB_ASP
                 }
 
             }
-            //PostBack es cuando la pagina se carga despues de cada evento, un click, cambio en la grilla 
+      
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -45,10 +45,6 @@ namespace Prueba_de_appWEB_ASP
                 }
             }
             lblError.Visible = true;
-            //muestra el msj que estaba oculto
-
-            //otra forma, salta el popUp:
-            //Response.Write("<script>alert('usuario y/o contraseña incorrectos')</script>");
         }
     }
 }

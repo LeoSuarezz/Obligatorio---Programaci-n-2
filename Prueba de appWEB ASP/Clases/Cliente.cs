@@ -17,10 +17,10 @@ namespace Prueba_de_appWEB_ASP.Clases
 
         public string datosCliente
         {
-            get { return $"Documento: {documentoCliente} - Nombre: {nombreCliente} - Apellido: {apellidoCliente} - Teléfono: {telefonoCliente}"; }
+            get { return $"Documento: {documentoCliente} - Nombre y Apellido: {nombreCliente} {apellidoCliente} - Teléfono: {telefonoCliente}"; }
         }
 
-        public Cliente() { } // constructor
+        public Cliente() { } 
         public Cliente(string documento, string nombreCliente, string apellidoCliente, string direccionCliente, string telefonoCliente)
         {
             this.documentoCliente = documento;

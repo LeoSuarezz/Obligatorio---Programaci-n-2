@@ -106,6 +106,7 @@
 
     <div class="row">
         <div class="col-lg-8">
+            <h3>Lista de Usuarios</h3>
             <asp:GridView ID="gvUsuarios" runat="server" Width="80%" BorderWidth="2px" CellSpacing="5"
                 OnRowCancelingEdit="gvUsuarios_RowCancelingEdit"
                 OnRowDeleting="gvUsuarios_RowDeleting"
@@ -118,7 +119,7 @@
                     <asp:TemplateField HeaderText="Número ID Usuario" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lblidUsuario" runat="server" Text='<%# Bind("idUsuario") %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+               
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                     </asp:TemplateField>
@@ -126,7 +127,7 @@
                     <asp:TemplateField HeaderText="Username" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lbl1" runat="server" Text='<%# Bind("username") %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples ARCHIVO NUESTRO CORRECTO-->
+                  
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:Label ID="lbl2" runat="server" Text='<%# Bind("username") %>'></asp:Label>
@@ -139,7 +140,7 @@
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:TextBox ID="txtNombreGrid" runat="server" Text='<%# Bind("nombreUsuario") %>'></asp:TextBox>
-                            <!-- El EDITITEMTEMPLATE se cambia de label a textbox para que permita editar-->
+                
                         </EditItemTemplate>
                     </asp:TemplateField>
 
@@ -154,57 +155,57 @@
 
                     <asp:TemplateField HeaderText="Ver Clientes" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:CheckBox ID="lbl33" runat="server" Checked='<%# Bind("verClientes") %>'></asp:CheckBox>
+                            <asp:CheckBox ID="lbl33" runat="server" Checked='<%# Bind("verClientes") %>' Enabled="false"></asp:CheckBox>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:CheckBox ID="chkVerClientes" runat="server" Checked='<%# Bind("verClientes") %>'></asp:CheckBox>
+                            <asp:CheckBox ID="chkVerClientes" runat="server" Checked='<%# Bind("verClientes") %>' Enabled="true"></asp:CheckBox>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Ver Ventas" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:CheckBox ID="lbl35" runat="server" Checked='<%# Bind("verVentas") %>'></asp:CheckBox>
+                            <asp:CheckBox ID="lbl35" runat="server" Checked='<%# Bind("verVentas") %>' Enabled="false"></asp:CheckBox>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:CheckBox ID="chkVerVentas" runat="server" Checked='<%# Bind("verVentas") %>'></asp:CheckBox>
+                            <asp:CheckBox ID="chkVerVentas" runat="server" Checked='<%# Bind("verVentas") %>' Enabled="true"></asp:CheckBox>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Ver Vehículos" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:CheckBox ID="lbl36" runat="server" Checked='<%# Bind("verVehiculos") %>'></asp:CheckBox>
+                            <asp:CheckBox ID="lbl36" runat="server" Checked='<%# Bind("verVehiculos") %>' Enabled="false"></asp:CheckBox>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:CheckBox ID="chkVerVehiculos" runat="server" Checked='<%# Bind("verVehiculos") %>'></asp:CheckBox>
+                            <asp:CheckBox ID="chkVerVehiculos" runat="server" Checked='<%# Bind("verVehiculos") %>' Enabled="true"></asp:CheckBox>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Ver Alquileres" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:CheckBox ID="lbl37" runat="server" Checked='<%# Bind("verAlquileres") %>'></asp:CheckBox>
+                            <asp:CheckBox ID="lbl37" runat="server" Checked='<%# Bind("verAlquileres") %>' Enabled="false"></asp:CheckBox>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:CheckBox ID="chkVerAlquileres" runat="server" Checked='<%# Bind("verAlquileres") %>'></asp:CheckBox>
+                            <asp:CheckBox ID="chkVerAlquileres" runat="server" Checked='<%# Bind("verAlquileres") %>' Enabled="true"></asp:CheckBox>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Editar" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkEdit" runat="server" CausesValidation="False" CommandName="Edit" Text="Editar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-primary" ID="lnkEdit" runat="server" CausesValidation="False" CommandName="Edit" Text="Editar"></asp:LinkButton>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:LinkButton ID="lnkUpdate" runat="server" CausesValidation="True" CommandName="Update" Text="Actualizar"></asp:LinkButton>
-                            <asp:LinkButton ID="lnkCancel" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancelar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-primary" ID="lnkUpdate" runat="server" CausesValidation="True" CommandName="Update" Text="Actualizar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-secondary" ID="lnkCancel" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancelar"></asp:LinkButton>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Eliminar" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkDelete" runat="server" CausesValidation="False" CommandName="Delete" Text="Eliminar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-dark" ID="lnkDelete" runat="server" CausesValidation="False" CommandName="Delete" Text="Eliminar"></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <%--<asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true" />--%>
+    
                 </Columns>
             </asp:GridView>
         </div>

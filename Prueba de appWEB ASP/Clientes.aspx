@@ -104,80 +104,87 @@
                     <asp:TemplateField HeaderText="Documento" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lbl100" runat="server" Text='<%# Bind("documentoCliente") %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                           
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                         <EditItemTemplate>
                             <asp:Label ID="txtDocumentoGrid" runat="server" Text='<%# Bind("documentoCliente") %>'></asp:Label>
-                            <!-- El EDITITEMTEMPLATE se cambia de label a textbox para que permita editar-->
+                         
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Nombre" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lbl101" runat="server" Text='<%# Bind("nombreCliente") %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                          
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                         <EditItemTemplate>
                             <asp:TextBox ID="txtNombreGrid" runat="server" Text='<%# Bind("nombreCliente") %>'></asp:TextBox>
-                            <!-- El EDITITEMTEMPLATE se cambia de label a textbox para que permita editar-->
+                          
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Apellido" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lbl102" runat="server" Text='<%# Bind("apellidoCliente") %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                           
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                         <EditItemTemplate>
                             <asp:TextBox ID="txtApellidoGrid" runat="server" Text='<%# Bind("apellidoCliente") %>'></asp:TextBox>
-                            <!-- El EDITITEMTEMPLATE se cambia de label a textbox para que permita editar-->
+                          
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Dirección" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="lbl103" runat="server" Text='<%# Bind("direccionCliente") %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                         
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                         <EditItemTemplate>
                             <asp:TextBox ID="txtDireccionGrid" runat="server" Text='<%# Bind("direccionCliente") %>'></asp:TextBox>
-                            <!-- El EDITITEMTEMPLATE se cambia de label a textbox para que permita editar-->
+                       
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Teléfono" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label TextMode="Number" ID="lbl104" runat="server" Text='<%# Bind("telefonoCliente") %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples -->
+                        
                         </ItemTemplate>
                         <ItemStyle Width="150px" />
                         <EditItemTemplate>
-                            <asp:TextBox TextMode="Number" ID="txtTelefonoGrid" runat="server" Text='<%# Bind("telefonoCliente") %>'></asp:TextBox>
-                            <!-- El EDITITEMTEMPLATE se cambia de label a textbox para que permita editar-->
+                            <asp:TextBox TextMode="Number" min="1" ID="txtTelefonoGrid" runat="server" Text='<%# Bind("telefonoCliente") %>'></asp:TextBox>
+                        
                         </EditItemTemplate>
                     </asp:TemplateField>
+                 
 
-                    <%--<asp:TemplateField HeaderText="Editar" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
-                        <asp:CommandField ButtonType="Link" ShowEditButton="true" />
-                    </asp:TemplateField>--%>
-
-                    <asp:TemplateField HeaderText="Editar" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderText="Editar" ItemStyle-BorderWidth="2px" 
+                        ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" 
+                        HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" 
+                        HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkEdit" runat="server" CausesValidation="False" CommandName="Edit" Text="Editar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-primary" ID="lnkEdit" runat="server" 
+                            CausesValidation="False" CommandName="Edit" Text="Editar"></asp:LinkButton>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:LinkButton ID="lnkUpdate" runat="server" CausesValidation="True" CommandName="Update" Text="Actualizar"></asp:LinkButton>
-                            <asp:LinkButton ID="lnkCancel" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancelar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-primary" ID="lnkUpdate" runat="server" 
+                            CausesValidation="True" CommandName="Update" Text="Actualizar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-secondary" ID="lnkCancel" runat="server" 
+                            CausesValidation="False" CommandName="Cancel" Text="Cancelar"></asp:LinkButton>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Eliminar" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderText="Eliminar" ItemStyle-BorderWidth="2px" 
+                        ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" 
+                        HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" 
+                        HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkDelete" runat="server" CausesValidation="False" CommandName="Delete" Text="Eliminar"></asp:LinkButton>
+                          <asp:LinkButton CssClass="btn btn-dark" ID="lnkDelete" runat="server" 
+                          CausesValidation="False" CommandName="Delete" Text="Eliminar"></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
 

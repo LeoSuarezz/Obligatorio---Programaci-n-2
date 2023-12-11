@@ -18,6 +18,13 @@ namespace Prueba_de_appWEB_ASP
             Master.FindControl("lnkVentas").Visible = BaseDeDatos.usuarioLogeado.getVerVentas();
             Master.FindControl("lnkAlquileres").Visible = BaseDeDatos.usuarioLogeado.getVerAlquileres();
 
+            if (!BaseDeDatos.usuarioLogeado.getVerUsuarios())
+            {  
+                Response.Redirect("Default.aspx");
+                
+            }
+
+
             if (!Page.IsPostBack)
             {
                 this.gvUsuarios.DataSource = BaseDeDatos.listaUsuarios;
@@ -83,13 +90,13 @@ namespace Prueba_de_appWEB_ASP
 
         protected void gvUsuarios_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            string username = this.gvUsuarios.DataKeys[e.RowIndex].Values[0].ToString();  //se carga el usuario de la linea que se está por borrar
+            string username = this.gvUsuarios.DataKeys[e.RowIndex].Values[0].ToString();  
             foreach (var usuario in BaseDeDatos.listaUsuarios)
             {
                 if (usuario.getUsername() == username)
                 {
                     BaseDeDatos.listaUsuarios.Remove(usuario);
-                    break;  //se agrega el break para que corte al momento de elimiar y saltar el error que dice que se está recorriendo una lista que se está modificando en tiempo real
+                    break;  
                 }
             }
 
@@ -118,7 +125,6 @@ namespace Prueba_de_appWEB_ASP
                 {
                     usuario.setNombreUsuario(nombre);
                     usuario.setApellidoUsuario(apellido);
-                    usuario.setVerUsuarios(chkVerUsuarios.Checked);
                     usuario.setVerClientes(chkVerClientes.Checked);   
                     usuario.setVerVentas(chkVerVentas.Checked);
                     usuario.setVerVehiculos(chkVerVehiculos.Checked);
@@ -129,6 +135,8 @@ namespace Prueba_de_appWEB_ASP
             this.gvUsuarios.EditIndex = -1;
             this.gvUsuarios.DataSource = BaseDeDatos.listaUsuarios;
             this.gvUsuarios.DataBind();
+
+            Response.Redirect(Request.RawUrl);
         }
 
         protected void gvUsuarios_RowEditing(object sender, GridViewEditEventArgs e)
@@ -137,16 +145,16 @@ namespace Prueba_de_appWEB_ASP
             this.gvUsuarios.DataSource = BaseDeDatos.listaUsuarios;
             this.gvUsuarios.DataBind();
         }
-        protected void gvUsuarios_RowDataBound(object sender, GridViewRowEventArgs e) //metodo para que cuando se está editando no se pueda usar el boton de eliminar en esa línea y en las demás líneas
+        protected void gvUsuarios_RowDataBound(object sender, GridViewRowEventArgs e) 
         {
             if (gvUsuarios.EditIndex != -1 && e.Row.RowType == DataControlRowType.DataRow)
             {
-                // Estás en modo de edición, deshabilita el botón de eliminación para todas las filas
+               
                 LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDelete");
                 if (lnkDelete != null)
                 {
                     lnkDelete.Enabled = false;
-                    lnkDelete.CssClass = "disabled-link"; // Agrega una clase CSS para cambiar la apariencia si lo deseas
+                    lnkDelete.CssClass = "btn btn-dark"; 
                 }
             }
         }

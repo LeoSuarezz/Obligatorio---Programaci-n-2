@@ -22,7 +22,6 @@ namespace Prueba_de_appWEB_ASP.Clases
         public Usuario() { }
         public Usuario(int idUsuario, string username, string nombreUsuario, string apellidoUsuario, string password, bool verClientes, bool verUsuarios, bool verVentas, bool verVehiculos, bool verAlquileres)
         {
-            //Agregar los nuevos atributos
             this.idUsuario = idUsuario;
             this.username = username;
             this.nombreUsuario = nombreUsuario;
@@ -39,7 +38,7 @@ namespace Prueba_de_appWEB_ASP.Clases
         public string getUsername() { return username; }
         public string getNombreUsuario() { return nombreUsuario; }
         public string getApellidoUsuario() { return apellidoUsuario; }
-        public string getPassword() { return password; } //OJO//
+        public string getPassword() { return password; } 
         public bool getVerClientes() { return verClientes; }
         public bool getVerUsuarios() { return verUsuarios; }
         public bool getVerVentas() { return verVentas; }

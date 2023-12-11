@@ -22,7 +22,7 @@ namespace Prueba_de_appWEB_ASP
             {
                 UserNameLabel.Text = BaseDeDatos.usuarioLogeado.getUsername();
 
-                // Verificar los permisos y ocultar los botones según sea necesario
+                
                 if (!BaseDeDatos.usuarioLogeado.getVerVentas())
                 {
                     btnVentas.Visible = false;
@@ -30,8 +30,19 @@ namespace Prueba_de_appWEB_ASP
 
                 if (!BaseDeDatos.usuarioLogeado.getVerAlquileres())
                 {
-                    // Ajusta el ID del botón de Alquileres según tu código real
+         
                     btnAlquileres.Visible = false;
+                }
+
+                if (!BaseDeDatos.usuarioLogeado.getVerClientes())
+                {
+      
+                    btnClientes.Visible = false;
+                }
+
+                if (!BaseDeDatos.usuarioLogeado.getVerVehiculos())
+                {
+                     btnVehiculos.Visible = false;
                 }
             }
         }

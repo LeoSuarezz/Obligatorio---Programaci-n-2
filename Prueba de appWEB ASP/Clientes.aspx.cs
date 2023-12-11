@@ -19,6 +19,12 @@ namespace Prueba_de_appWEB_ASP
             Master.FindControl("lnkVentas").Visible = BaseDeDatos.usuarioLogeado.getVerVentas();
             Master.FindControl("lnkAlquileres").Visible = BaseDeDatos.usuarioLogeado.getVerAlquileres();
 
+            if (!BaseDeDatos.usuarioLogeado.getVerClientes())
+            {
+                Response.Redirect("Default.aspx");
+
+            }
+
             if (!Page.IsPostBack)
             {
                 this.gvClientes.DataSource = BaseDeDatos.listaClientes;
@@ -56,8 +62,8 @@ namespace Prueba_de_appWEB_ASP
                     cliente.setTelefonoCliente(txtTelefono.Text);
                     BaseDeDatos.listaClientes.Add(cliente);
 
-                    lblError.Visible = false; // oculta el LABEL de error si anteriormente se ingresó un documento duplicado
-                    lblIngresoCorrecto.Visible = true; //muestra LABEL de ingresado correctamente
+                    lblError.Visible = false; 
+                    lblIngresoCorrecto.Visible = true; 
                     lblErrorCedulaUruguaya.Visible = false;
 
                     this.gvClientes.DataSource = BaseDeDatos.listaClientes;
@@ -96,31 +102,40 @@ namespace Prueba_de_appWEB_ASP
             string direccion = (filaSeleccionada.FindControl("txtDireccionGrid") as TextBox).Text;
             string telefono = (filaSeleccionada.FindControl("txtTelefonoGrid") as TextBox).Text;
 
-            foreach (var cliente in BaseDeDatos.listaClientes)
+            int valorIngresado;
+
+            if (int.TryParse(telefono, out valorIngresado) && valorIngresado >= 1)
             {
-                if (cliente.getDocumentoCliente() == documento)
+                foreach (var cliente in BaseDeDatos.listaClientes)
                 {
-                    cliente.setNombreCliente(nombre);
-                    cliente.setApellidoCliente(apellido);
-                    cliente.setDireccionCliente(direccion);
-                    cliente.setTelefonoCliente(telefono);
+                    if (cliente.getDocumentoCliente() == documento)
+                    {
+                        cliente.setNombreCliente(nombre);
+                        cliente.setApellidoCliente(apellido);
+                        cliente.setDireccionCliente(direccion);
+                        cliente.setTelefonoCliente(telefono);
+                    }
                 }
+            }
+            else
+            {
+          
+                Response.Write("<script>alert('Ha ingresado un número incorrecto, ingrese nuevamente el teléfono.')</script>");
             }
 
             this.gvClientes.EditIndex = -1;
             this.gvClientes.DataSource = BaseDeDatos.listaClientes;
             this.gvClientes.DataBind();
-
         }
         protected void gvClientes_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            string documento = this.gvClientes.DataKeys[e.RowIndex].Values[0].ToString();  //se carga la matricula de la fila en la que se da click en eliminar
+            string documento = this.gvClientes.DataKeys[e.RowIndex].Values[0].ToString();  
             foreach (var cliente in BaseDeDatos.listaClientes)
             {
                 if (cliente.getDocumentoCliente() == documento)
                 {
                     BaseDeDatos.listaClientes.Remove(cliente);
-                    break;  //se agrega el break para que corte al momento de elimiar y saltar el error que dice que se está recorriendo una lista que se está modificando en tiempo real
+                    break;  
                 }
             }
 
@@ -199,14 +214,15 @@ namespace Prueba_de_appWEB_ASP
         {
             if (gvClientes.EditIndex != -1 && e.Row.RowType == DataControlRowType.DataRow)
             {
-                // Estás en modo de edición, deshabilita el botón de eliminación para todas las filas
+               
                 LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDelete");
                 if (lnkDelete != null)
                 {
                     lnkDelete.Enabled = false;
-                    lnkDelete.CssClass = "disabled-link"; // Agrega una clase CSS para cambiar la apariencia si lo deseas
+                    lnkDelete.CssClass = "btn btn-dark"; 
                 }
             }
+
         }
     }
 }

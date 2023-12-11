@@ -1,6 +1,7 @@
 ﻿using Prueba_de_appWEB_ASP.Clases;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -18,6 +19,11 @@ namespace Prueba_de_appWEB_ASP
             Master.FindControl("lnkVentas").Visible = BaseDeDatos.usuarioLogeado.getVerVentas();
             Master.FindControl("lnkAlquileres").Visible = BaseDeDatos.usuarioLogeado.getVerAlquileres();
 
+            if (!BaseDeDatos.usuarioLogeado.getVerAlquileres())
+            {
+                Response.Redirect("Default.aspx");
+
+            }
 
             if (!Page.IsPostBack)
             {
@@ -31,12 +37,12 @@ namespace Prueba_de_appWEB_ASP
 
                 var vehiculosDisponibles = BaseDeDatos.listaVehiculos.Where(v => v.disponible).ToList()
                     .Where(v => v.disponible)
-                    .OrderBy(v => v.GetType().Name)  // Ordena por el nombre de la clase (Auto, Camion, Moto)
-                    .ThenBy(v => v.datosParaLista)  // Luego por orden alfabético
+                    .OrderBy(v => v.GetType().Name)  
+                    .ThenBy(v => v.datosParaLista)  
                     .ToList();
-                    
+
                 cboVehiculos.DataSource = vehiculosDisponibles;
-                cboVehiculos.DataTextField = "datosParaLista";
+                cboVehiculos.DataTextField = "datosParaListaAlq";
                 cboVehiculos.DataValueField = "matricula";
                 cboVehiculos.DataBind();
 
@@ -46,7 +52,6 @@ namespace Prueba_de_appWEB_ASP
         }
         protected void txtCantDias_TextChanged(object sender, EventArgs e)
         {
-            // Este método se ejecutará cuando cambie el texto en el TextBox
             ActualizarPrecio();
         }
 
@@ -88,11 +93,11 @@ namespace Prueba_de_appWEB_ASP
                     vehiculo.setDisponible(false);
                 }
             }
-            //this.gvAlquiler.DataSource = BaseDeDatos.listaAlquileres; //le dice "ESTE ES EL LISTADO A CARGAR"
-            //this.gvAlquiler.DataBind();
-            
+            this.gvAlquiler.DataSource = BaseDeDatos.listaAlquileres; 
+            this.gvAlquiler.DataBind();
 
-            ActualizarListaVehiculos(); //actualisa visualmente la lista de vehiculos a vender
+
+            ActualizarListaVehiculos(); 
         }
 
         protected void gvAlquiler_RowEditing(object sender, GridViewEditEventArgs e)
@@ -103,39 +108,54 @@ namespace Prueba_de_appWEB_ASP
         }
         protected void gvAlquiler_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int ID = Convert.ToInt32(this.gvAlquiler.DataKeys[e.RowIndex].Values[0]);   //se carga el ID de alquiler de la fila en la que se da click en eliminar
+            int ID = Convert.ToInt32(this.gvAlquiler.DataKeys[e.RowIndex].Values[0]); 
             foreach (var alquiler in BaseDeDatos.listaAlquileres)
             {
                 if (alquiler.getNumAlquiler() == ID)
                 {
+                    string matricula = alquiler.getMatricula();
+            
+                    var vehiculo = BaseDeDatos.listaVehiculos.Find(v => v.getMatricula() == matricula);
+
+                    if (vehiculo != null)
+                    {
+                      
+                        vehiculo.setDisponible(true);
+                    }
+
                     BaseDeDatos.listaAlquileres.Remove(alquiler);
-                    break;  //se agrega el break para que corte al momento de elimiar y saltar el error que dice que se está recorriendo una lista que se está modificando en tiempo real
+
+                    break; 
                 }
             }
 
             this.gvAlquiler.EditIndex = -1;
             this.gvAlquiler.DataSource = BaseDeDatos.listaAlquileres;
             this.gvAlquiler.DataBind();
+
+            ActualizarListaVehiculos();
         }
         protected void gvAlquiler_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow filaSeleccionada = gvAlquiler.Rows[e.RowIndex];
             int ID = Convert.ToInt32(this.gvAlquiler.DataKeys[e.RowIndex].Values[0]);
 
-            string matricula = (filaSeleccionada.FindControl("txtMatriculaGrid") as TextBox).Text;
             CheckBox chkAutoDevuelto = (CheckBox)filaSeleccionada.FindControl("chkDevueltoGrid");
-
-            //string apellido = (filaSeleccionada.FindControl("txtApellidoGrid") as TextBox).Text;
-            //string direccion = (filaSeleccionada.FindControl("txtDireccionGrid") as TextBox).Text;
-            //string telefono = (filaSeleccionada.FindControl("txtTelefonoGrid") as TextBox).Text;
 
             foreach (var alquiler in BaseDeDatos.listaAlquileres)
             {
                 if (alquiler.getNumAlquiler() == ID)
                 {
-                    alquiler.setMatricula(matricula);
                     alquiler.setEstadoAlquiler(chkAutoDevuelto.Checked);
-                    
+
+                    var vehiculo = BaseDeDatos.listaVehiculos.Find(v => v.getMatricula() == alquiler.getMatricula());
+
+                    if (vehiculo != null)
+                    {
+                   
+                        vehiculo.setDisponible(true);
+                    }
+
                 }
             }
 
@@ -143,6 +163,13 @@ namespace Prueba_de_appWEB_ASP
             this.gvAlquiler.DataSource = BaseDeDatos.listaAlquileres;
             this.gvAlquiler.DataBind();
 
+            ActualizarListaVehiculos();
+        }
+        protected void gvAlquiler_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            this.gvAlquiler.EditIndex = -1;
+            this.gvAlquiler.DataSource = BaseDeDatos.listaAlquileres;
+            this.gvAlquiler.DataBind();
         }
 
         protected void cboVehiculos_SelectedIndexChanged(object sender, EventArgs e)
@@ -154,15 +181,43 @@ namespace Prueba_de_appWEB_ASP
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                // Obtener la matrícula de la fila actual
+             
                 string matricula = DataBinder.Eval(e.Row.DataItem, "matriculaVehiculo").ToString();
 
-                // Obtener la lista de vehículos desde la clase BaseDeDatos
+              
                 List<Vehiculo> listaVehiculos = BaseDeDatos.ObtenerDatosVehiculos();
 
-                // Buscar el vehículo por matrícula
+          
                 Vehiculo vehiculo = listaVehiculos.Find(v => v.matricula == matricula);
 
+                Label lblEstado = e.Row.FindControl("lbl34") as Label;
+                if (lblEstado != null)
+                {
+                    string estado = lblEstado.Text;
+
+                   if (estado == "Atrasado")
+                    {
+                        
+
+                        int columnIndex = GetColumnIndexByName(gvAlquiler, "Estado"); 
+
+                        if (columnIndex >= 0)
+                        {
+                            e.Row.Cells[columnIndex].BackColor = ColorTranslator.FromHtml("#F6C095");
+                            lblEstado.ForeColor = ColorTranslator.FromHtml("#C70039");                        }
+                    }
+                }
+
+            }
+            if (gvAlquiler.EditIndex != -1 && e.Row.RowType == DataControlRowType.DataRow)
+            {
+                
+                LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDelete");
+                if (lnkDelete != null)
+                {
+                    lnkDelete.Enabled = false;
+                    lnkDelete.CssClass = "btn btn-dark"; 
+                }
             }
         }
 
@@ -216,12 +271,16 @@ namespace Prueba_de_appWEB_ASP
             return cliente != null ? cliente.nombreCliente.ToString() + " " + cliente.apellidoCliente.ToString() : "No disponible";
         }
 
-        private void ActualizarListaVehiculos() // //actualista visualmente la lista de vehiculos a vender
+        private void ActualizarListaVehiculos() 
         {
-            var vehiculosDisponibles = BaseDeDatos.listaVehiculos.Where(v => v.disponible).ToList();
+            var vehiculosDisponibles = BaseDeDatos.listaVehiculos.Where(v => v.disponible).ToList()
+                    .Where(v => v.disponible)
+                    .OrderBy(v => v.GetType().Name)  
+                    .ThenBy(v => v.datosParaLista)  
+                    .ToList();
 
             cboVehiculos.DataSource = vehiculosDisponibles;
-            cboVehiculos.DataTextField = "datosParaLista";
+            cboVehiculos.DataTextField = "datosParaListaAlq";
             cboVehiculos.DataValueField = "matricula";
             cboVehiculos.DataBind();
         }
@@ -250,6 +309,17 @@ namespace Prueba_de_appWEB_ASP
                     lblSimbolo.Visible = true;
                 }
             }
+        }
+        private int GetColumnIndexByName(GridView grid, string columnName)
+        {
+            foreach (DataControlField field in grid.Columns)
+            {
+                if (field.HeaderText.Equals(columnName) || (field is BoundField && ((BoundField)field).DataField.Equals(columnName)))
+                {
+                    return grid.Columns.IndexOf(field);
+                }
+            }
+            return -1;
         }
     }
 }

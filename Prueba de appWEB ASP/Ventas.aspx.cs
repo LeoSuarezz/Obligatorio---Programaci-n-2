@@ -18,6 +18,12 @@ namespace Prueba_de_appWEB_ASP
             Master.FindControl("lnkVentas").Visible = BaseDeDatos.usuarioLogeado.getVerVentas();
             Master.FindControl("lnkAlquileres").Visible = BaseDeDatos.usuarioLogeado.getVerAlquileres();
 
+            if (!BaseDeDatos.usuarioLogeado.getVerVentas())
+            {
+                Response.Redirect("Default.aspx");
+
+            }
+
             if (!Page.IsPostBack)
             {
                 lstClientes.DataSource = BaseDeDatos.listaClientes;
@@ -30,8 +36,8 @@ namespace Prueba_de_appWEB_ASP
 
                 var vehiculosDisponibles = BaseDeDatos.listaVehiculos.Where(v => v.disponible).ToList()
                     .Where(v => v.disponible)
-                    .OrderBy(v => v.GetType().Name)  // Ordena por el nombre de la clase (Auto, Camion, Moto)
-                    .ThenBy(v => v.datosParaLista)  // Luego por orden alfabético
+                    .OrderBy(v => v.GetType().Name) 
+                    .ThenBy(v => v.datosParaLista)  
                     .ToList();
 
                 cboVehiculos.DataSource = vehiculosDisponibles;
@@ -75,10 +81,40 @@ namespace Prueba_de_appWEB_ASP
                     vehiculo.setDisponible(false);
                 }
             }
-            this.gvVentas.DataSource = BaseDeDatos.listaVentas; //le dice "ESTE ES EL LISTADO A CARGAR"
+            this.gvVentas.DataSource = BaseDeDatos.listaVentas; 
             this.gvVentas.DataBind();
 
-            ActualizarListaVehiculos(); //actualisa visualmente la lista de vehiculos a vender
+            ActualizarListaVehiculos();
+        }
+        protected void gvVentas_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int ID = Convert.ToInt32(this.gvVentas.DataKeys[e.RowIndex].Values[0]);  
+            foreach (var venta in BaseDeDatos.listaVentas)
+            {
+                if (venta.getNumVenta() == ID)
+                {
+                    string matricula = venta.getMatricula();
+
+                  
+                    var vehiculo = BaseDeDatos.listaVehiculos.Find(v => v.getMatricula() == matricula);
+
+                    if (vehiculo != null)
+                    {
+                        
+                        vehiculo.setDisponible(true);
+                    }
+
+                    BaseDeDatos.listaVentas.Remove(venta);
+
+                    break; 
+                }
+            }
+
+            this.gvVentas.EditIndex = -1;
+            this.gvVentas.DataSource = BaseDeDatos.listaVentas;
+            this.gvVentas.DataBind();
+
+            ActualizarListaVehiculos();
         }
 
         protected void cboVehiculos_SelectedIndexChanged(object sender, EventArgs e)
@@ -100,13 +136,12 @@ namespace Prueba_de_appWEB_ASP
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                // Obtener la matrícula de la fila actual
                 string matricula = DataBinder.Eval(e.Row.DataItem, "matriculaVehiculo").ToString();
 
-                // Obtener la lista de vehículos desde la clase BaseDeDatos
+             
                 List<Vehiculo> listaVehiculos = BaseDeDatos.ObtenerDatosVehiculos();
 
-                // Buscar el vehículo por matrícula
+          
                 Vehiculo vehiculo = listaVehiculos.Find(v => v.matricula == matricula);
 
             }
@@ -161,9 +196,13 @@ namespace Prueba_de_appWEB_ASP
             return cliente != null ? cliente.nombreCliente.ToString() + " " + cliente.apellidoCliente.ToString() : "No disponible";
         }
 
-        private void ActualizarListaVehiculos() // //actualista visualmente la lista de vehiculos a vender
+        private void ActualizarListaVehiculos() 
         {
-            var vehiculosDisponibles = BaseDeDatos.listaVehiculos.Where(v => v.disponible).ToList();
+            var vehiculosDisponibles = BaseDeDatos.listaVehiculos.Where(v => v.disponible).ToList()
+                    .Where(v => v.disponible)
+                    .OrderBy(v => v.GetType().Name) 
+                    .ThenBy(v => v.datosParaLista)  
+                    .ToList();
 
             cboVehiculos.DataSource = vehiculosDisponibles;
             cboVehiculos.DataTextField = "datosParaLista";

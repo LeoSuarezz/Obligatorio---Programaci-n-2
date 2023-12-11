@@ -18,12 +18,18 @@ namespace Prueba_de_appWEB_ASP
             Master.FindControl("lnkVentas").Visible = BaseDeDatos.usuarioLogeado.getVerVentas();
             Master.FindControl("lnkAlquileres").Visible = BaseDeDatos.usuarioLogeado.getVerAlquileres();
 
+            if (!BaseDeDatos.usuarioLogeado.getVerVehiculos())
+            {
+                Response.Redirect("Default.aspx");
+
+            }
+
             if (!Page.IsPostBack)
             {
                 var vehiculosDisponibles = BaseDeDatos.listaVehiculos.Where(v => v.disponible).ToList();                   
 
                 this.gvVehiculos.DataSource = vehiculosDisponibles;
-                this.gvVehiculos.DataBind(); //resetea la grilla y carga con el cambio
+                this.gvVehiculos.DataBind(); 
             }
         }
 
@@ -38,13 +44,13 @@ namespace Prueba_de_appWEB_ASP
 
         protected void gvVehiculos_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            string matricula = this.gvVehiculos.DataKeys[e.RowIndex].Values[0].ToString();  //se carga la matricula de la fila en la que se da click en eliminar
+            string matricula = this.gvVehiculos.DataKeys[e.RowIndex].Values[0].ToString();  
             foreach (var vehiculo in BaseDeDatos.listaVehiculos)
             {
                 if (vehiculo.getMatricula() == matricula)
                 {
                     BaseDeDatos.listaVehiculos.Remove(vehiculo);
-                    break;  //se agrega el break para que corte al momento de elimiar y saltar el error que dice que se está recorriendo una lista que se está modificando en tiempo real
+                    break;  
                 }
             }
 
@@ -61,34 +67,37 @@ namespace Prueba_de_appWEB_ASP
 
             string marca = (filaSeleccionada.FindControl("txtMarcaGrid") as TextBox).Text;
             string modelo = (filaSeleccionada.FindControl("txtModeloGrid") as TextBox).Text;
-            int kilometros = int.Parse((filaSeleccionada.FindControl("txtKilometrosGrid") as TextBox).Text);
 
-            int anio = int.Parse((filaSeleccionada.FindControl("txtAnioGrid") as TextBox).Text);
-            DateTime nuevaFecha = new DateTime(anio, 1, 1);
+            int valorIngresadoKilometros;
+            int valorIngresadoAnio;
+            int valorIngresadoPrecioVenta;
+            int valorIngresadoPrecioAlquiler;
 
-            string color = (filaSeleccionada.FindControl("txtColorGrid") as TextBox).Text;
-            int precioVenta = int.Parse((filaSeleccionada.FindControl("txtPrecioVentaGrid") as TextBox).Text);
-            int precioAlquiler = int.Parse((filaSeleccionada.FindControl("txtPrecioAlquilerGrid") as TextBox).Text);
-
-            string imagen1 = (filaSeleccionada.FindControl("txtImagen1Grid") as TextBox).Text;
-            string imagen2 = (filaSeleccionada.FindControl("txtImagen2Grid") as TextBox).Text;
-            string imagen3 = (filaSeleccionada.FindControl("txtImagen3Grid") as TextBox).Text;
-
-            foreach (var vehiculo in BaseDeDatos.listaVehiculos)
+            if (int.TryParse((filaSeleccionada.FindControl("txtKilometrosGrid") as TextBox).Text, out valorIngresadoKilometros) && valorIngresadoKilometros >= 1
+                && int.TryParse((filaSeleccionada.FindControl("txtAnioGrid") as TextBox).Text, out valorIngresadoAnio) && valorIngresadoAnio >= 1
+                && int.TryParse((filaSeleccionada.FindControl("txtPrecioVentaGrid") as TextBox).Text, out valorIngresadoPrecioVenta) && valorIngresadoPrecioVenta >= 1
+                && int.TryParse((filaSeleccionada.FindControl("txtPrecioAlquilerGrid") as TextBox).Text, out valorIngresadoPrecioAlquiler) && valorIngresadoPrecioAlquiler >= 1)
             {
-                if (vehiculo.getMatricula() == matricula)
+                foreach (var vehiculo in BaseDeDatos.listaVehiculos)
                 {
-                    vehiculo.setMarca(marca);
-                    vehiculo.setModelo(modelo);
-                    vehiculo.setKilometros(kilometros);
-                    vehiculo.setAnio(nuevaFecha);
-                    vehiculo.setColor(color);
-                    vehiculo.setPrecioVenta(precioVenta);
-                    vehiculo.setPrecioAlquiler(precioAlquiler);
-                    vehiculo.setImagen1(imagen1);
-                    vehiculo.setImagen2(imagen2);
-                    vehiculo.setImagen3(imagen3);
+                    if (vehiculo.getMatricula() == matricula)
+                    {
+                        vehiculo.setMarca(marca);
+                        vehiculo.setModelo(modelo);
+                        vehiculo.setKilometros(valorIngresadoKilometros);
+                        vehiculo.setAnio(new DateTime(valorIngresadoAnio, 1, 1));
+                        vehiculo.setColor((filaSeleccionada.FindControl("txtColorGrid") as TextBox).Text);
+                        vehiculo.setPrecioVenta(valorIngresadoPrecioVenta);
+                        vehiculo.setPrecioAlquiler(valorIngresadoPrecioAlquiler);
+                        vehiculo.setImagen1((filaSeleccionada.FindControl("txtImagen1Grid") as TextBox).Text);
+                        vehiculo.setImagen2((filaSeleccionada.FindControl("txtImagen2Grid") as TextBox).Text);
+                        vehiculo.setImagen3((filaSeleccionada.FindControl("txtImagen3Grid") as TextBox).Text);
+                    }
                 }
+            }
+            else
+            {
+                Response.Write("<script>alert('Ha ingresado un valor incorrecto, verifique e intente nuevamente.')</script>");
             }
 
             this.gvVehiculos.EditIndex = -1;
@@ -96,8 +105,8 @@ namespace Prueba_de_appWEB_ASP
 
             this.gvVehiculos.DataSource = vehiculosDisponibles;
             this.gvVehiculos.DataBind();
-
         }
+
 
         protected void gvVehiculos_RowEditing(object sender, GridViewEditEventArgs e)
         {
@@ -152,7 +161,7 @@ namespace Prueba_de_appWEB_ASP
                 vehiculo.setModelo(txtModelo.Text);
                 int kilometros = Convert.ToInt32(txtKilometros.Text);
                 vehiculo.setKilometros(kilometros);
-                //vehiculo.setAnio(txtAnio.Text); ///////   ARREGLAR   PREGUNTAR A MARTIN
+            
                 vehiculo.setColor(txtColor.Text);
                 int precioventa = Convert.ToInt32(txtPrecioVenta.Text);
                 vehiculo.setPrecioVenta(precioventa);
@@ -165,8 +174,8 @@ namespace Prueba_de_appWEB_ASP
                 vehiculo.setCilindrada(cilindrada);
 
                 BaseDeDatos.listaVehiculos.Add(vehiculo);
-                this.gvVehiculos.DataSource = BaseDeDatos.listaVehiculos; //le dice "ESTE ES EL LISTADO A CARGAR"
-                this.gvVehiculos.DataBind();  //aca se dice AHORA CARGA
+                this.gvVehiculos.DataSource = BaseDeDatos.listaVehiculos; 
+                this.gvVehiculos.DataBind(); 
             }
             if (rblTipoVehiculo.SelectedItem.Value == "Auto" && matriculaCorrecta == true)
             {
@@ -177,7 +186,7 @@ namespace Prueba_de_appWEB_ASP
                 vehiculo.setModelo(txtModelo.Text);
                 int kilometros = Convert.ToInt32(txtKilometros.Text);
                 vehiculo.setKilometros(kilometros);
-                //vehiculo.setAnio(txtAnio.Text); ///////   ARREGLAR   PREGUNTAR A MARTIN
+            
                 vehiculo.setColor(txtColor.Text);
                 int precioventa = Convert.ToInt32(txtPrecioVenta.Text);
                 vehiculo.setPrecioVenta(precioventa);
@@ -190,8 +199,8 @@ namespace Prueba_de_appWEB_ASP
                 vehiculo.setNumPasajeros(cantPasajeros);
 
                 BaseDeDatos.listaVehiculos.Add(vehiculo);
-                this.gvVehiculos.DataSource = BaseDeDatos.listaVehiculos; //le dice "ESTE ES EL LISTADO A CARGAR"
-                this.gvVehiculos.DataBind();  //aca se dice AHORA CARGA
+                this.gvVehiculos.DataSource = BaseDeDatos.listaVehiculos; 
+                this.gvVehiculos.DataBind(); 
             }
             if (rblTipoVehiculo.SelectedItem.Value == "Camion" && matriculaCorrecta == true)
             {
@@ -202,7 +211,7 @@ namespace Prueba_de_appWEB_ASP
                 vehiculo.setModelo(txtModelo.Text);
                 int kilometros = Convert.ToInt32(txtKilometros.Text);
                 vehiculo.setKilometros(kilometros);
-                //vehiculo.setAnio(txtAnio.Text); ///////   ARREGLAR   PREGUNTAR A MARTIN
+               
                 vehiculo.setColor(txtColor.Text);
                 int precioventa = Convert.ToInt32(txtPrecioVenta.Text);
                 vehiculo.setPrecioVenta(precioventa);
@@ -215,12 +224,12 @@ namespace Prueba_de_appWEB_ASP
                 vehiculo.setCapacidadCarga(toneladas);
 
                 BaseDeDatos.listaVehiculos.Add(vehiculo);
-                this.gvVehiculos.DataSource = BaseDeDatos.listaVehiculos; //le dice "ESTE ES EL LISTADO A CARGAR"
-                this.gvVehiculos.DataBind();  //aca se dice AHORA CARGA
+                this.gvVehiculos.DataSource = BaseDeDatos.listaVehiculos; 
+                this.gvVehiculos.DataBind();  
 
             }
 
-            txtMatricula.Text = string.Empty; //se limpia despues de guardar
+            txtMatricula.Text = string.Empty; 
             txtMarca.Text = string.Empty;
             txtModelo.Text = string.Empty;
             txtKilometros.Text = string.Empty;
@@ -238,12 +247,12 @@ namespace Prueba_de_appWEB_ASP
         {
             if (gvVehiculos.EditIndex != -1 && e.Row.RowType == DataControlRowType.DataRow)
             {
-                // Estás en modo de edición, deshabilita el botón de eliminación para todas las filas
+               
                 LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDelete");
                 if (lnkDelete != null)
                 {
                     lnkDelete.Enabled = false;
-                    lnkDelete.CssClass = "disabled-link"; // Agrega una clase CSS para cambiar la apariencia si lo deseas
+                    lnkDelete.CssClass = "btn btn-dark";
                 }
             }
         }

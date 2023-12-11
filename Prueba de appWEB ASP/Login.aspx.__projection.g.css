@@ -1,6 +1,45 @@
 
 /* BEGIN EXTERNAL SOURCE */
 
+    
+    #ContenedorFooter {
+        display: none;
+    }
+
+    #hrfooter {
+        display: none;
+    }
+
+ 
+    .row {
+        margin-bottom: 8px;
+        align-content: center;
+        justify-content: center;
+    }
+
+    
+/* END EXTERNAL SOURCE */
+
+/* BEGIN EXTERNAL SOURCE */
+div {
+margin-top:200px
+}
+/* END EXTERNAL SOURCE */
+
+/* BEGIN EXTERNAL SOURCE */
+TextBox {
+width: 250px;
+}
+/* END EXTERNAL SOURCE */
+
+/* BEGIN EXTERNAL SOURCE */
+TextBox {
+width: 250px;
+}
+/* END EXTERNAL SOURCE */
+
+/* BEGIN EXTERNAL SOURCE */
+
         .row {
             margin-bottom: 8px;
         }

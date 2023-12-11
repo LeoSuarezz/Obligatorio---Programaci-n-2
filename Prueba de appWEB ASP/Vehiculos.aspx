@@ -10,6 +10,11 @@
             border: 2px solid grey;
             padding: 10px;
         }
+
+        div#tipoVehiculo .customRadioButtonList td {
+            border: none !important;
+            outline: none !important;
+        }
     </style>
 
     <div class="row">
@@ -119,12 +124,12 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="tipoVehiculo">
         <div class="col-lg-5">
-            <asp:RadioButtonList ID="rblTipoVehiculo" runat="server" OnSelectedIndexChanged="rblTipoVehiculo_SelectedIndexChanged" AutoPostBack="true">
+            <asp:RadioButtonList CssClass="customRadioButtonList" ID="rblTipoVehiculo" runat="server" OnSelectedIndexChanged="rblTipoVehiculo_SelectedIndexChanged" AutoPostBack="true">
                 <asp:ListItem Value="Moto" Selected="True">Moto</asp:ListItem>
                 <asp:ListItem Value="Auto">Auto</asp:ListItem>
-                <asp:ListItem Value="Camion">Camion</asp:ListItem>
+                <asp:ListItem Value="Camión">Camion</asp:ListItem>
             </asp:RadioButtonList>
         </div>
     </div>
@@ -156,7 +161,8 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <asp:GridView ID="gvVehiculos" runat="server" Width="80%" BorderWidth="2px" CellSpacing="5" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center"
+            <h3>Lista de Vehículos</h3>
+            <asp:GridView ID="gvVehiculos" runat="server" Width="100%" BorderWidth="2px" CellSpacing="5" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center"
                 OnRowCancelingEdit="gvVehiculos_RowCancelingEdit"
                 OnRowDeleting="gvVehiculos_RowDeleting"
                 OnRowEditing="gvVehiculos_RowEditing"
@@ -166,10 +172,9 @@
                 DataKeyNames="Matricula">
                 <Columns>
 
-                    <asp:TemplateField HeaderText="Matricula" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderText="Matrícula" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:Label ID="lbl1" runat="server" Text='<%# Bind("matricula") %>'></asp:Label>
-                            <!-- aca se hace referncia al atributo del objeto, va con comillas simples ARCHIVO NUESTRO CORRECTO-->
+                            <asp:Label ID="lbl1" runat="server" Text='<%# Bind("matricula") %>'></asp:Label>    
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:Label ID="lbl2" runat="server" Text='<%# Bind("matricula") %>'></asp:Label>
@@ -182,7 +187,6 @@
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:TextBox ID="txtMarcaGrid" runat="server" Text='<%# Bind("marca") %>'></asp:TextBox>
-                            <!-- El EDITITEMTEMPLATE se cambia de label a textbox para que permita editar-->
                         </EditItemTemplate>
                     </asp:TemplateField>
 
@@ -200,7 +204,7 @@
                             <asp:Label ID="lbl24" runat="server" Text='<%# Bind("kilometros") %>'></asp:Label>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtKilometrosGrid" runat="server" Text='<%# Bind("kilometros") %>'></asp:TextBox>
+                            <asp:TextBox ID="txtKilometrosGrid" TextMode="Number" min="0" runat="server" Text='<%# Bind("kilometros") %>'></asp:TextBox>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
@@ -209,7 +213,7 @@
                             <asp:Label ID="lbl25" runat="server" Text='<%# Eval("anio", "{0:yyyy}") %>'></asp:Label>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtAnioGrid" runat="server" Text='<%# Bind("anio", "{0:yyyy}") %>'></asp:TextBox>
+                            <asp:TextBox ID="txtAnioGrid" TextMode="Number" min="0" runat="server" Text='<%# Bind("anio", "{0:yyyy}") %>'></asp:TextBox>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
@@ -227,7 +231,7 @@
                             <asp:Label ID="lbl27" runat="server" Text='<%# Bind("precioVenta") %>'></asp:Label>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtPrecioVentaGrid" runat="server" Text='<%# Bind("precioVenta") %>'></asp:TextBox>
+                            <asp:TextBox ID="txtPrecioVentaGrid" TextMode="Number" min="0" runat="server" Text='<%# Bind("precioVenta") %>'></asp:TextBox>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
@@ -236,13 +240,13 @@
                             <asp:Label ID="lbl28" runat="server" Text='<%# Bind("precioAlquiler") %>'></asp:Label>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtPrecioAlquilerGrid" runat="server" Text='<%# Bind("precioAlquiler") %>'></asp:TextBox>
+                            <asp:TextBox ID="txtPrecioAlquilerGrid" TextMode="Number" min="0" runat="server" Text='<%# Bind("precioAlquiler") %>'></asp:TextBox>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Imagen 1" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:Image ID="lbl20" runat="server" ImageUrl='<%# Bind("imagen1") %>' Width="200"></asp:Image>
+                            <asp:Image ID="lbl20" runat="server" ImageUrl='<%# Bind("imagen1") %>' Width="150"></asp:Image>
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:TextBox ID="txtImagen1Grid" runat="server" Text='<%# Bind("imagen1") %>'></asp:TextBox>
@@ -251,7 +255,7 @@
 
                     <asp:TemplateField HeaderText="Imagen 2" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:Image ID="lbl21" runat="server" ImageUrl='<%# Bind("imagen2") %>' Width="200"></asp:Image>
+                            <asp:Image ID="lbl21" runat="server" ImageUrl='<%# Bind("imagen2") %>' Width="150"></asp:Image>
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:TextBox ID="txtImagen2Grid" runat="server" Text='<%# Bind("imagen2") %>'></asp:TextBox>
@@ -260,7 +264,7 @@
 
                     <asp:TemplateField HeaderText="Imagen 3" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:Image ID="lbl22" runat="server" ImageUrl='<%# Bind("imagen3") %>' Width="200"></asp:Image>
+                            <asp:Image ID="lbl22" runat="server" ImageUrl='<%# Bind("imagen3") %>' Width="150"></asp:Image>
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:TextBox ID="txtImagen3Grid" runat="server" Text='<%# Bind("imagen3") %>'></asp:TextBox>
@@ -269,21 +273,23 @@
 
                     <asp:TemplateField HeaderText="Editar" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkEdit" runat="server" CausesValidation="False" CommandName="Edit" Text="Editar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-primary" ID="lnkEdit" runat="server" CausesValidation="False" CommandName="Edit" Text="Editar"></asp:LinkButton>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:LinkButton ID="lnkUpdate" runat="server" CausesValidation="True" CommandName="Update" Text="Actualizar"></asp:LinkButton>
-                            <asp:LinkButton ID="lnkCancel" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancelar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-primary" ID="lnkUpdate" runat="server" CausesValidation="True" CommandName="Update" Text="Actualizar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-secondary" ID="lnkCancel" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancelar"></asp:LinkButton>
                         </EditItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Eliminar" ItemStyle-BorderWidth="2px" ItemStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Center" HeaderStyle-BorderWidth="2px" HeaderStyle-BorderStyle="Solid" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkDelete" runat="server" CausesValidation="False" CommandName="Delete" Text="Eliminar"></asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-dark" ID="lnkDelete" runat="server" CausesValidation="False" CommandName="Delete" Text="Eliminar"></asp:LinkButton>
                         </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:LinkButton CssClass="btn btn-dark" ID="lnkDelete" runat="server" CausesValidation="False" CommandName="Delete" Text="Eliminar"></asp:LinkButton>
+                        </EditItemTemplate>
                     </asp:TemplateField>
 
-                    <%--<asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true" />--%>
                 </Columns>
             </asp:GridView>
         </div>

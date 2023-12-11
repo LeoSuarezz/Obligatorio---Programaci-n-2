@@ -22,7 +22,12 @@ namespace Prueba_de_appWEB_ASP.Clases
 
         public string datosParaLista 
         {
-            get { return $"Tipo: {this.GetType().Name} - Matricula: {matricula} - Marca: {marca} - Año: {anio.Year} - Precio: ${precioVenta}"; }
+            get { return $"{this.GetType().Name} - Matrícula: {matricula} - Marca: {marca} - Año: {anio.Year} - Precio: ${precioVenta}"; }
+        }
+
+        public string datosParaListaAlq
+        {
+            get { return $"{this.GetType().Name} - Matrícula: {matricula} - Marca: {marca} - Año: {anio.Year} - Precio diario: ${precioAlquiler}"; }
         }
 
         public Vehiculo(bool disponible, string matricula, string marca, string modelo, int kilometros, DateTime anio,
@@ -42,7 +47,7 @@ namespace Prueba_de_appWEB_ASP.Clases
             this.imagen3 = imagen3;
         }
         public Vehiculo() { }
-        public bool getDispobilde() { return this.disponible; } 
+        public bool getDisponible() { return this.disponible; } 
         public string getMatricula() { return this.matricula; }
         public string getMarca() { return this.marca; }
         public string getModelo() { return this.modelo; }
